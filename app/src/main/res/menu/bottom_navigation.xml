@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_check"
+        android:icon="@drawable/ic_check_black_24dp"
+        android:title="checkin" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_check_black_24dp"
+        android:title="logout" />
+
+
+
+</menu>

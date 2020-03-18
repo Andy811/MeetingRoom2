@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">YourAppName</string>
+    <string name="user">account</string>
+    <string name="password">password</string>
+    <string name="login">login</string>
+    <string name="loginError">loginError</string>
+    <string name="connectError">connectError</string>
+    <string name="refresh">refresh</string>
+</resources>
