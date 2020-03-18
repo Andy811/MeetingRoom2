@@ -2,13 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_check"
-        android:icon="@drawable/ic_check_black_24dp"
-        android:title="checkin" />
+        android:id="@+id/my_id"
+        android:title="簽到"
+        android:icon="@drawable/ic_me"
+        android:orderInCategory="1"/>
+
     <item
-        android:id="@+id/nav_logout"
-        android:icon="@drawable/ic_check_black_24dp"
-        android:title="logout" />
+        android:id="@+id/nearbys_id"
+        android:title="登出"
+        android:icon="@mipmap/ic_launcher"
+        
+        android:orderInCategory="2"/>
+
 
 
 
