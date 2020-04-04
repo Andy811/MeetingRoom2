@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/my_id"
+        android:id="@+id/nev_sign_In"
         android:title="簽到"
         android:icon="@drawable/ic_me"
-        android:orderInCategory="1"/>
+       />
 
     <item
-        android:id="@+id/nearbys_id"
+        android:id="@+id/neg_log_out"
         android:title="登出"
         android:icon="@mipmap/ic_launcher"
         
-        android:orderInCategory="2"/>
+        />
 
 
 
