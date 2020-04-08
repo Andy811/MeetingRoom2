@@ -48,10 +48,13 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$lifecycleExtensionsVersion"
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+  //  androidTestImplementation 'androidx.test:runner:1.1.1'
+   // androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1' 舊的
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //zxing libraries
-    //implementation "me.dm7.barcodescanner:1.9.13"
-    //implementation 'com.karumi:dexter:5.0.0'
+    //CghScanner
+    implementation 'com.google.zxing:core:3.3.2'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation 'org.apache.commons:commons-lang3:3.8.1'
 }

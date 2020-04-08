@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">App名字</string>
+    <string name="app_name">會議系統</string>
     <string name="user">員編 </string>
     <string name="password">密碼</string>
     <string name="login">登入</string>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YourAppName</string>
+    <string name="app_name">MeetingSystem</string>
     <string name="user">account</string>
     <string name="password">password</string>
     <string name="login">login</string>
