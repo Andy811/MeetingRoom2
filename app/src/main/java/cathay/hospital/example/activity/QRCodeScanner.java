@@ -20,6 +20,10 @@ import cathay.hospital.example.R;
 
 public class QRCodeScanner extends Fragment {
 
+    public QRCodeScanner(){
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,6 +34,8 @@ public class QRCodeScanner extends Fragment {
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 new IntentIntegrator(getActivity())
                         .setCaptureActivity(ScanningActivity.class)
                         .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)//掃條碼的類型
@@ -38,9 +44,22 @@ public class QRCodeScanner extends Fragment {
                         .setBeepEnabled(false)//是否開啟聲音
                         .setBarcodeImageEnabled(true)//掃描後會產生圖片
                         .initiateScan();
+                //scan();
             }
         });
         return view;
+
+    }
+
+    public void scan(){
+        IntentIntegrator intent = IntentIntegrator.forSupportFragment(QRCodeScanner.this);
+        //IntentIntegrator intent = new IntentIntegrator(getActivity());
+        intent.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+        intent.setPrompt("請對準條碼");
+        intent.setCameraId(0);
+        intent.setBeepEnabled(false);
+        intent.setBarcodeImageEnabled(true);
+        intent.initiateScan();
     }
 
     @Override
@@ -48,7 +67,7 @@ public class QRCodeScanner extends Fragment {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(result!=null){
             if(result.getContents()==null){
-                Toast.makeText(getActivity(),"no result",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"no result",Toast.LENGTH_LONG).show();
             }else {
                 tvResult.setText(result.getContents().toString());
             }
@@ -59,4 +78,3 @@ public class QRCodeScanner extends Fragment {
     private TextView tvResult;
     private Button btnScan;
 }
-

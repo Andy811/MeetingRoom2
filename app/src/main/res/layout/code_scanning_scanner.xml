@@ -2,14 +2,14 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.example.cghscanner.CustomBarcodePreview
+    <cathay.hospital.example.activity.CustomBarcodePreview
         android:id="@+id/zxing_barcode_surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:zxing_framing_rect_height="250dp"
         app:zxing_framing_rect_width="250dp" />
 
-    <com.example.cghscanner.ZxingViewFinderView
+    <cathay.hospital.example.activity.ZxingViewFinderView
         android:id="@+id/zxing_viewfinder_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
