@@ -3,15 +3,19 @@
 
     <item
         android:id="@+id/nev_sign_In"
-        android:title="簽到"
-        android:icon="@drawable/ic_me"
-       />
+        android:icon="@drawable/qr_code"
+        android:title="簽到/退" />
+    <item
+        android:id="@+id/nev_notification"
+        android:icon="@drawable/ic_notification"
+        android:title="通知"
+        />
 
     <item
-        android:id="@+id/neg_log_out"
-        android:title="登出"
-        android:icon="@mipmap/ic_launcher"
-        
+        android:id="@+id/nev_user_info"
+        android:icon="@drawable/ic_me"
+        android:title="我"
+
         />
 
 

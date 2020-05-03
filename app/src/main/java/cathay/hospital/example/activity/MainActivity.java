@@ -1,8 +1,6 @@
 package cathay.hospital.example.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -42,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
                             fragment = new QRCodeScanner();
 
                             break;
-                        case  R.id.neg_log_out:
-                            fragment = new LogOut();
+                        case  R.id.nev_user_info:
+                            fragment = new UserInfo();
                             break;
+                        case R.id.nev_notification:
+                            fragment = new Notification();
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment).commit();
 

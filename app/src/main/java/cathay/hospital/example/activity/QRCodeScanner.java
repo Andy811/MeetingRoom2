@@ -19,7 +19,7 @@ import com.google.zxing.integration.android.IntentResult;
 import cathay.hospital.example.R;
 
 public class QRCodeScanner extends Fragment {
-
+    TextView tvResult;
     public QRCodeScanner(){
 
     }
@@ -29,7 +29,7 @@ public class QRCodeScanner extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.scanner,container,false);
-        TextView tvResult =  view.findViewById(R.id.tv_result);
+        tvResult =  view.findViewById(R.id.tv_result);
         Button btnScan = view.findViewById(R.id.btn_scan);
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,23 +51,13 @@ public class QRCodeScanner extends Fragment {
 
     }
 
-    public void scan(){
-        IntentIntegrator intent = IntentIntegrator.forSupportFragment(QRCodeScanner.this);
-        //IntentIntegrator intent = new IntentIntegrator(getActivity());
-        intent.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        intent.setPrompt("請對準條碼");
-        intent.setCameraId(0);
-        intent.setBeepEnabled(false);
-        intent.setBarcodeImageEnabled(true);
-        intent.initiateScan();
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(result!=null){
             if(result.getContents()==null){
-                Toast.makeText(getContext(),"no result",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"no result",Toast.LENGTH_LONG).show();  //結果不顯示可能跟getContext有關
             }else {
                 tvResult.setText(result.getContents().toString());
             }
@@ -75,6 +65,5 @@ public class QRCodeScanner extends Fragment {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-    private TextView tvResult;
-    private Button btnScan;
+
 }

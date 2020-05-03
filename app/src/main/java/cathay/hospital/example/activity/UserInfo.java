@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment;
 
 import cathay.hospital.example.R;
 
-public class LogOut extends Fragment {
+public class UserInfo extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.logout,container,false);
+        return inflater.inflate(R.layout.user_info,container,false);
     }
 }
