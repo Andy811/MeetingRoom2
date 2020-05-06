@@ -43,11 +43,11 @@ public class ListAdapter extends RecyclerView.Adapter{
 
         @Override
         public int getItemCount() {
-            return MessageData.message.length;
+            return MessageData.message_data.length;
         }
         private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-                      private TextView tvMessage;
+            private TextView tvMessage;
 
 
 
@@ -58,7 +58,7 @@ public class ListAdapter extends RecyclerView.Adapter{
 
             }
             public void bindView(int position){
-                tvMessage.setText(MessageData.message[position]);
+                tvMessage.setText(MessageData.message_data[position]);
 
             }
             public void onClick(View view){

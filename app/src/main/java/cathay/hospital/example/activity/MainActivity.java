@@ -1,5 +1,6 @@
 package cathay.hospital.example.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -45,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.nev_notification:
                             fragment = new Notification();
+                            break;
+                        case R.id.nev_meeting_record:
+                            fragment = new MeetingRecord();
+                            break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment).commit();
 

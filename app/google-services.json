@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "560073482040",
+    "firebase_url": "https://cathayexample.firebaseio.com",
+    "project_id": "cathayexample",
+    "storage_bucket": "cathayexample.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560073482040:android:97c7893fe8d97e5f1d2bcd",
+        "android_client_info": {
+          "package_name": "cathay.hospital.example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560073482040-ioqvueb6ehr5pfjil7ksr7nu5rnt8fdf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cathay.hospital.example",
+            "certificate_hash": "068a680bc009e8910e84c738d5b0d59ec2b0d49c"
+          }
+        },
+        {
+          "client_id": "560073482040-q0s0cm067vglpuecaojoe5ih71jl7ici.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-d6vUsYtj2ly9R5U1pkQFr5j8YisIAA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560073482040-q0s0cm067vglpuecaojoe5ih71jl7ici.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

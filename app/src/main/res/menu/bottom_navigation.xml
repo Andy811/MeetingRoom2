@@ -10,12 +10,15 @@
         android:icon="@drawable/ic_notification"
         android:title="通知"
         />
-
+    <item
+        android:id="@+id/nev_meeting_record"
+        android:icon="@drawable/meeting_record"
+        android:title="會議記錄"
+        />
     <item
         android:id="@+id/nev_user_info"
         android:icon="@drawable/ic_me"
         android:title="我"
-
         />
 
 

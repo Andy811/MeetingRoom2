@@ -44,7 +44,7 @@ public class QRCodeScanner extends Fragment {
                         .setBeepEnabled(false)//是否開啟聲音
                         .setBarcodeImageEnabled(true)//掃描後會產生圖片
                         .initiateScan();
-                //scan();
+
             }
         });
         return view;
@@ -64,6 +64,7 @@ public class QRCodeScanner extends Fragment {
         }else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+        tvResult.setText(result.getContents().toString());
     }
 
 }

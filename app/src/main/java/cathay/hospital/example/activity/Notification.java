@@ -22,18 +22,21 @@ public class Notification extends Fragment {
 
 
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.user_info,container,false);
+            View view = inflater.inflate(R.layout.notification,container,false);
 
 
             RecyclerView recyclerView = view.findViewById(R.id.rv_notification);
-            ArrayList<NotificationMessage> data = new ArrayList<>();
+
+        //    ArrayList<NotificationMessage> data = new ArrayList<>();
 
        //     data.add(new NotificationMessage("等等要開會喔哭哭"));
             ListAdapter adapter = new ListAdapter();
             recyclerView.setAdapter(adapter);
             RecyclerView.LayoutManager layoutmanager = new LinearLayoutManager(getActivity());
+
             recyclerView.setLayoutManager(layoutmanager);
             return view;
+
 
 
 
