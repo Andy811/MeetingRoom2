@@ -36,7 +36,7 @@ public class QRCodeScanner extends Fragment {
             public void onClick(View view) {
 
 
-                new IntentIntegrator(getActivity())
+                IntentIntegrator.forSupportFragment(QRCodeScanner.this)
                         .setCaptureActivity(ScanningActivity.class)
                         .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)//掃條碼的類型
                         .setPrompt("請對準條碼")//設置提醒標語
