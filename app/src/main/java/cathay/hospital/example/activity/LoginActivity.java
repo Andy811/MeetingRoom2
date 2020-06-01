@@ -1,5 +1,7 @@
 package cathay.hospital.example.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();//隱藏標題列
 
+
         init();
     }
 
@@ -46,6 +49,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         btnRefresh.setOnClickListener(this);
 
+
+        //新加的
+        SharedPreferences defaultUser = getSharedPreferences("session",MODE_PRIVATE);
+        if(defaultUser.getString("userNo","")!=""){
+          /*  userNo = editUser.getText().toString();
+            password = editPassword.getText().toString();
+            loginMember();*/
+            UtilTools.goActivity(this,MainActivity.class);
+       //     Intent intent = new Intent();
+          //  intent.setClass(this,MainActivity.class);
+          //  startActivity(intent);
+        }///////////////////////////
         sharedPrefsModel = new SharedPreferencesModel(getApplicationContext());
     }
 
@@ -70,19 +85,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 sharedMap.put("divNo",divNo);
                 sharedPrefsModel.setSharedPrefsData(sharedMap);
 
-                UtilTools.goActivity(this,MainActivity.class);
+               UtilTools.goActivity(this,MainActivity.class);
+
+
                 break;
             default:
                 HashMap<String,String> paramsMap = new HashMap<>();
                 paramsMap.put("userNo",userNo);
                 paramsMap.put("password",AES.encrypt(password));
                 paramsMap.put("divno",divNo);
-
+                sharedPrefsModel.setSharedPrefsData(paramsMap); //這行是自己加的
                 viewModel_login = new ViewModel_login(divNo,paramsMap);
                 viewModel_login.getLoginData().observe(this, dataModel -> {
                     Boolean error = dataModel.getError();
                     if(error) {
-                        textError.setText(R.string.connectError);
+                     //   textError.setText(R.string.connectError);
+                        textError.setText("哭阿");
                     } else {
                         LoginData loginData = (LoginData)dataModel.getDataObj();
                         if(loginData.getStatus().equals("1")){

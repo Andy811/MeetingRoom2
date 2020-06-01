@@ -42,6 +42,11 @@ public class ApiService {
 
     public Single<LoginData> getLoginData(HashMap<String, String> params) {
         return api.getLoginData(params);
+}
+
+    public Single signin(HashMap<String, String> params) {
+
+        return api.signin(params);
     }
 
 }
