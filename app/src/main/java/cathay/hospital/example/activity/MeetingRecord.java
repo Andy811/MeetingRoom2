@@ -19,6 +19,7 @@ public class MeetingRecord extends Fragment {
         View view = inflater.inflate(R.layout.meeting_record,container,false);
 
 
+
         Button writeRecord = view.findViewById(R.id.btn_write_record);
 
         view.findViewById(R.id.btn_write_record).setOnClickListener(new View.OnClickListener() {
