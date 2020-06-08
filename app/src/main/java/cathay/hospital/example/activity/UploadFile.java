@@ -40,7 +40,7 @@ public class UploadFile extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseStorage storage;
     StorageReference storageReference;
-
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +79,7 @@ public class UploadFile extends AppCompatActivity {
 
     private void uploadFile(Uri pdfUri) {
 
-        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle("Uploading File...");
         progressDialog.setProgress(0);
@@ -142,7 +142,7 @@ public class UploadFile extends AppCompatActivity {
        intent.setType("application/pdf");
       //  intent.setType("image/jpeg");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-    startActivityForResult(intent,86);
+        startActivityForResult(intent,86);
 }
 
     @Override
@@ -154,7 +154,6 @@ public class UploadFile extends AppCompatActivity {
             selectedFile.setText("已選擇檔案: "+data.getData().getLastPathSegment());   //還沒有requestCode的樣子，所以放在判斷式中不會出來
         }else{
             Toast.makeText(UploadFile.this,"請選擇檔案",Toast.LENGTH_SHORT).show();
-
         }
     }
 
