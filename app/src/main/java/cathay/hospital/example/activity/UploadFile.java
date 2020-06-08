@@ -8,13 +8,17 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,46 +41,49 @@ public class UploadFile extends AppCompatActivity {
     Button selectFile,upload;
     TextView selectedFile;
     Uri pdfUri;
-    FirebaseDatabase database;
-    FirebaseStorage storage;
-    StorageReference storageReference;
+   //FirebaseDatabase database;
+    //FirebaseStorage storage;
+
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
     ProgressDialog progressDialog;
+    EditText ed_note;
+    private UploadTask mUploadTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_file);
 
-
         selectFile = findViewById(R.id.btn_select_file);
         upload = findViewById(R.id.btn_upload);
         selectedFile = findViewById(R.id.tv_selected_file);
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        ed_note = findViewById(R.id.ed_note);
         selectFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ContextCompat.checkSelfPermission(UploadFile.this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+             //   if(ContextCompat.checkSelfPermission(UploadFile.this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
                     selectPdf();
-                }else{
-                    ActivityCompat.requestPermissions(UploadFile.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},9);
-                }
+
             }
         });
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(pdfUri!=null){
+
                     uploadFile(pdfUri);
-                }else{
-                    //Toast.makeText(UploadFile.this,"請選擇檔案",Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
         setSpinner();//設定會議名稱選項
     }
-
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
     private void uploadFile(Uri pdfUri) {
 
         progressDialog = new ProgressDialog(this);
@@ -84,43 +91,50 @@ public class UploadFile extends AppCompatActivity {
         progressDialog.setTitle("Uploading File...");
         progressDialog.setProgress(0);
         progressDialog.show();
-        final String fileName = System.currentTimeMillis()+"";
-        StorageReference storageReference=storage.getReference();
+        //   final String fileName = System.currentTimeMillis()+"";
+        StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                + "." + getFileExtension(pdfUri));
 
-        storageReference.child("Uploads").child(fileName).putFile(pdfUri)
+        mUploadTask = (UploadTask) fileReference.putFile(pdfUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String url = storageReference.getDownloadUrl().toString();
-                        DatabaseReference reference = database.getReference();
-                        reference.child(fileName).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(UploadFile.this, "上傳成功", Toast.LENGTH_LONG).show();
-                                    //  progressDialog.dismiss();
-                                } else {
-                                    Toast.makeText(UploadFile.this, "上傳失敗", Toast.LENGTH_LONG).show();
-                                    //  progressDialog.dismiss();
-                                }
-                            }
-                        });
+
+                        //  String url = storageReference.getDownloadUrl().toString();
+
+                        Toast.makeText(UploadFile.this, "Upload successful", Toast.LENGTH_LONG).show();
+                      // if(pdfUri!=null) {    這個判斷式會導致出錯
+                           Upload upload = new Upload("Andy",
+                                   taskSnapshot.getStorage().getDownloadUrl().toString(),
+                                   "MeetingTest",
+                                   ed_note.getText().toString().trim());//有檔案
+                   /*    }/*else{
+                           Upload upload = new Upload("Andy2"
+                                   ,"Test Meeting"
+                                    ,ed_note.getText().toString().trim());//沒檔案
+                       }*/
+
+                        String uploadId = mDatabaseRef.push().getKey();
+                        mDatabaseRef.child(uploadId).setValue(upload);
+                        //      DatabaseReference reference = database.getReference("getRef");//原本沒有path
+                       //  mDatabaseRef.child().setValue(pdfUri);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(UploadFile.this,"File not successfully upload",Toast.LENGTH_LONG).show();
-                              //  progressDialog.dismiss();
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UploadFile.this, "File not successfully upload", Toast.LENGTH_LONG).show();
+                        // progressDialog.dismiss();
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                        int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
 
-                            }
-                        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                                int currentProgress = (int) (100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                        progressDialog.setProgress(currentProgress);
 
-                                progressDialog.setProgress(currentProgress);
-                            }
-                        });
+                    }
+                });
+
     }
 
 
@@ -153,7 +167,7 @@ public class UploadFile extends AppCompatActivity {
             pdfUri = data.getData();
             selectedFile.setText("已選擇檔案: "+data.getData().getLastPathSegment());   //還沒有requestCode的樣子，所以放在判斷式中不會出來
         }else{
-            Toast.makeText(UploadFile.this,"請選擇檔案",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadFile.this,"請選擇檔案",Toast.LENGTH_SHORT).show();
         }
     }
 
