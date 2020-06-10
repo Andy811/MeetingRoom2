@@ -40,7 +40,7 @@ import cathay.hospital.example.R;
 public class UploadFile extends AppCompatActivity {
     Button selectFile,upload;
     TextView selectedFile;
-    Uri pdfUri;
+   // Uri pdfUri;
    //FirebaseDatabase database;
     //FirebaseStorage storage;
 
@@ -49,6 +49,7 @@ public class UploadFile extends AppCompatActivity {
     ProgressDialog progressDialog;
     EditText ed_note;
     private UploadTask mUploadTask;
+    Uri uri ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,7 @@ public class UploadFile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                    uploadFile(pdfUri);
+                    uploadFile();
 
             }
         });
@@ -84,7 +85,7 @@ public class UploadFile extends AppCompatActivity {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
-    private void uploadFile(Uri pdfUri) {
+    private void uploadFile() {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -93,9 +94,9 @@ public class UploadFile extends AppCompatActivity {
         progressDialog.show();
         //   final String fileName = System.currentTimeMillis()+"";
         StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
-                + "." + getFileExtension(pdfUri));
+                + "." + getFileExtension(uri));
 
-        mUploadTask = (UploadTask) fileReference.putFile(pdfUri)
+        mUploadTask = (UploadTask) fileReference.putFile(uri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -103,21 +104,20 @@ public class UploadFile extends AppCompatActivity {
                         //  String url = storageReference.getDownloadUrl().toString();
 
                         Toast.makeText(UploadFile.this, "Upload successful", Toast.LENGTH_LONG).show();
-                      // if(pdfUri!=null) {    這個判斷式會導致出錯
+                     if(uri!=null) {    //這個判斷式會導致出錯
                            Upload upload = new Upload("Andy",
                                    taskSnapshot.getStorage().getDownloadUrl().toString(),
                                    "MeetingTest",
                                    ed_note.getText().toString().trim());//有檔案
-                   /*    }/*else{
+                    }/*else{
                            Upload upload = new Upload("Andy2"
                                    ,"Test Meeting"
                                     ,ed_note.getText().toString().trim());//沒檔案
-                       }*/
+                      }*/
 
                         String uploadId = mDatabaseRef.push().getKey();
                         mDatabaseRef.child(uploadId).setValue(upload);
-                        //      DatabaseReference reference = database.getReference("getRef");//原本沒有path
-                       //  mDatabaseRef.child().setValue(pdfUri);
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -164,7 +164,7 @@ public class UploadFile extends AppCompatActivity {
         //確認使用者是否有選擇檔案
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 86 && resultCode == RESULT_OK && data != null) {
-            pdfUri = data.getData();
+            uri = data.getData();
             selectedFile.setText("已選擇檔案: "+data.getData().getLastPathSegment());   //還沒有requestCode的樣子，所以放在判斷式中不會出來
         }else{
                 Toast.makeText(UploadFile.this,"請選擇檔案",Toast.LENGTH_SHORT).show();
